@@ -24,12 +24,11 @@ inline void sum(int *result, std::vector<int> vec){
 }
 
 int main(int argc, char **argv){
-    int i;
     int accum = 0;
     const int size = 40; // #define is now const
     std::vector<int> data(size, 0); // int[] is now std::vector<int>
 
-    for(i = 0; i < size; ++i){
+    for(int i = 0; i < size; ++i){
         data.push_back(i); // data[] is now data.push_back vector method
     }
 
