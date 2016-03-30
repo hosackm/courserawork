@@ -33,3 +33,5 @@
 
 # Coursera Specific
 *grading/
+*Makefile
+*/tests/include/*
