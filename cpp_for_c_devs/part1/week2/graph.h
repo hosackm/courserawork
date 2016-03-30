@@ -1,8 +1,8 @@
 #ifndef __GRAPH_H__
 #define __GRAPH_H__
 
+// Using adjacency Matrix
 #include <vector>
-
 class AdjacencyMatrix;
 
 class Graph {
@@ -24,9 +24,8 @@ public:
     // Get and Set an edge's value (cost)
     int getEdgeValue(int src, int dst);
     void setEdgeValue(int src, int dst, int val);
-
+    // populate vecNeighbors with the neihboring vertices for a vertex
     void neighbors(int src, std::vector<int> &vecNeighbors);
-
     int numVertices(){
         return nVertices;
     }

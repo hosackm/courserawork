@@ -1,9 +1,12 @@
 #include "graph.h"
 #include <iostream>
 
+//The Edge struct represents the edge between two vertices.  At initialization
+//all vertices have non-existent edges connecting them to all other vertices
+//but only when Edge.exists is set to true do these connections exist.
 typedef struct _Edge {
-    int cost;
-    bool exists;
+    int cost; // cost to travel across this edge
+    bool exists; // does the connection exist
 }Edge;
 
 class AdjacencyMatrix{
@@ -12,7 +15,8 @@ public:
         //Alloc mem
         matrix = new Edge[numVertices*numVertices];
 
-        //Set all vertices adjacent to themselves
+        //Set all vertices adjacent to themselves.  Edges to other vertices
+        //do not exist yet.
         for(int i = 0; i < numVertices; ++i){
             matrix[numVertices*i + i].exists = true;
         }
@@ -25,8 +29,8 @@ public:
         delete [] matrix;
     }
 
+    //Display each row line by line
     void display(){
-        // Display each row line by line
         for(int i = 0; i < nVertices; ++i){
             for(int j = 0; j < nVertices; ++j){
                 std::cout << matrix[i*nVertices+j].exists << " ";                
@@ -35,6 +39,7 @@ public:
         }
     }
 
+    //Check if two vertices are adjacent (an edge exists between them)
     bool isAdjacent(int x, int y){
         if(x >= nVertices || y >= nVertices){
             return false;
@@ -46,7 +51,7 @@ public:
         if(x >= nVertices || y >= nVertices){
             return;
         }
-        /* Edges are not directional so if Vertex A has
+        /* Edges are undirectional so if Vertex A has
            an edge with Vertex B Vertex B has an edge
            with Vertex A */
         matrix[x*nVertices+y].exists = val;
@@ -68,9 +73,6 @@ public:
     bool isEdge(int x, int y){
         return matrix[x*nVertices+y].exists;
     }
-    // Edge getEdge(int x, int y){
-    //     return matrix[x*nVertices+y];
-    // }
 private:
     Edge *matrix;
     int nVertices;
@@ -115,11 +117,14 @@ int Graph::getEdgeValue(int src, int dst){
 }
 
 void Graph::setEdgeValue(int src, int dst, int val){
+    // restrict negative costs
+    val = val < 0 ? 0 : val;
     edgeMatrix->setEdgeCost(src, dst, val);
 }
 
 void Graph::neighbors(int src, std::vector<int> &vecNeighbors){
     for(int dst = 0; dst < nVertices; dst++){
+        //Don't report edges looping back to the same vertex
         if(dst == src){
             continue;
         }
@@ -129,9 +134,13 @@ void Graph::neighbors(int src, std::vector<int> &vecNeighbors){
     }
 }
 
+//Print neighbors to stdout to verify the graph is working
 void Graph::displayNeighbors(int vertex){
+    //Get neighbors
     std::vector<int> ns;
     this->neighbors(vertex, ns);
+
+    //Print to stdout
     std::cout << "Neighbors for " << vertex << ":";
     for(int i = 0; i < ns.size(); ++i){
         if(i > 0){

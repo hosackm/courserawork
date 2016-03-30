@@ -111,3 +111,9 @@ TEST_F(GraphFixture, AddEdgesRemoveEdgesNeighborsEmpty){
     g->neighbors(1, result);
     ASSERT_EQ(0, result.size());
 }
+
+TEST_F(GraphFixture, NoNegativeCosts){
+    g->add(1, 2);
+    g->setEdgeValue(1, 2, -100);
+    ASSERT_EQ(0, g->getEdgeValue(1, 2));
+}
