@@ -1,37 +1,39 @@
 #ifndef __GRAPH_H__
 #define __GRAPH_H__
 
-// Using adjacency Matrix
-#include <vector>
-class AdjacencyMatrix;
+#include <list>
+
+//The Edge struct represents the edge between two vertices.  At initialization
+//all vertices have non-existent edges connecting them to all other vertices
+//but only when Edge.exists is set to true do these connections exist.
+typedef struct _Edge {
+	int cost; // cost to travel across this edge
+	bool exists; // does the connection exist
+}Edge;
 
 class Graph {
 public:
     Graph(int numVertices);
     ~Graph();
-    // Print to stdout
-    void display();
-    void displayNeighbors(int vertex);
+	// Function to randomly assign edges based on density and distance range
+    void randomize(double density, double min, double max);
     // are two vertices adjacent
     bool adjacent(int src, int dst);
     // add an edge from src to dst
     void add(int src, int dst);
     // remove edge from src to dst
     void remove(int src, int dst);
-    // Get and Set a node's value
-    int getNodeValue(int vertex);
-    void setNodeValue(int vertex, int val);
     // Get and Set an edge's value (cost)
     int getEdgeValue(int src, int dst);
     void setEdgeValue(int src, int dst, int val);
-    // populate vecNeighbors with the neihboring vertices for a vertex
-    void neighbors(int src, std::vector<int> &vecNeighbors);
-    int numVertices(){
-        return nVertices;
-    }
+	// Get the list of neighbors src has edges to
+	std::list<int> getNeighbors(int src);
+	int numVertices(){ return nVertices; }
+	// Return the cost of the shortest path from
+	// src to dst using Dijkstra's algorithm
+	std::list<int> dijkstraShortestPath(int src, int dst);
 private:
-    AdjacencyMatrix *edgeMatrix;
-    std::vector<int> vertexValues;
+	Edge *edgeMatrix;
     int nVertices;
 };
 #endif
