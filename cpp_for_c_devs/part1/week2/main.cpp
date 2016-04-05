@@ -2,6 +2,17 @@
 // To compile: clang++ -std=c++11 main.cpp
 // To run: ./a.exe <number of simulations>
 //         ./a.exe 100
+
+// Running the a Monte Carlo simulation 10,000 times gave the average path
+// length:
+//  ./main.out 10000
+//    Average path length over 10000 runs and density (0.2) = 1.56706
+//    Average path length over 10000 runs and density (0.4) = 1.5694
+//
+//  Running it 100 times gave:
+// ./main.out 100
+//    Average path length over 100 runs and density (0.2) = 1.74122
+//    Average path length over 100 runs and density (0.4) = 1.62857
 /*
 
 I learned many things while writing the simulation for calculating the average
