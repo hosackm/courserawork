@@ -6,6 +6,7 @@
 #include <set> // set
 #include <utility> // pair
 #include <vector> // vector
+#include <string> // string
 
 Graph::Graph(int numVertices){
     nVertices = numVertices;
@@ -19,6 +20,21 @@ Graph::Graph(int numVertices){
 	}
 
 	vertices = new std::vector<int>(numVertices);
+}
+
+Graph::Graph(std::ifstream &datafile){
+	if (datafile.is_open()){
+		std::string line;
+		std::getline(datafile, line);
+
+		int numNodes = atoi(line.c_str());
+		std::cout << "Num Nodes: " << numNodes << std::endl;
+
+		while (std::getline(datafile, line)){
+			std::cout << line << std::endl;
+		}
+		datafile.close();
+	}
 }
 
 Graph::~Graph(){
@@ -104,6 +120,7 @@ void Graph::setVertexValue(int num, int val){
 	if (num >= nVertices){
 		return;
 	}
+	val = val < 0 ? 0 : val;
 	vertices->at(num) = val;
 }
 

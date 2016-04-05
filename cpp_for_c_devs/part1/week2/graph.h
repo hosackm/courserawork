@@ -1,6 +1,7 @@
 #ifndef __GRAPH_H__
 #define __GRAPH_H__
 
+#include <fstream>
 #include <list>
 #include <vector>
 
@@ -15,6 +16,7 @@ typedef struct _Edge {
 class Graph {
 public:
     Graph(int numVertices);
+	Graph(std::ifstream &datafile);
     ~Graph();
 	// Function to randomly assign edges based on density and distance range
     void randomize(double density, double min, double max);
