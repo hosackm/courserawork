@@ -2,6 +2,7 @@
 #define __GRAPH_H__
 
 #include <list>
+#include <vector>
 
 //The Edge struct represents the edge between two vertices.  At initialization
 //all vertices have non-existent edges connecting them to all other vertices
@@ -26,6 +27,9 @@ public:
     // Get and Set an edge's value (cost)
     int getEdgeValue(int src, int dst);
     void setEdgeValue(int src, int dst, int val);
+    // Get and Set an vertex's value (cost)
+    int getVertexValue(int num);
+    void setVertexValue(int num, int val);
 	// Get the list of neighbors src has edges to
 	std::list<int> getNeighbors(int src);
 	int numVertices(){ return nVertices; }
@@ -33,7 +37,8 @@ public:
 	// src to dst using Dijkstra's algorithm
 	std::list<int> dijkstraShortestPath(int src, int dst);
 private:
-	Edge *edgeMatrix;
+    std::vector<std::vector<Edge> > edgeMatrix;
     int nVertices;
+    std::vector<int> *vertices;
 };
 #endif

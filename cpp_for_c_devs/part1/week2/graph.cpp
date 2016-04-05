@@ -9,11 +9,20 @@
 
 Graph::Graph(int numVertices){
     nVertices = numVertices;
-	edgeMatrix = new Edge[numVertices*numVertices];
+    // Create vector of vectors
+	edgeMatrix = std::vector<std::vector<Edge> >(nVertices);
+	for(int i = 0; i < nVertices; ++i){
+		std::vector<Edge> col = std::vector<Edge>(nVertices);
+		// Vertices should have edges with themselves
+		col.at(i).exists = true;
+		edgeMatrix.at(i) = col;
+	}
+
+	vertices = new std::vector<int>(numVertices);
 }
 
 Graph::~Graph(){
-    delete edgeMatrix;
+	delete vertices;
 }
 
 void Graph::randomize(double dens, double min, double max){
@@ -40,7 +49,8 @@ bool Graph::adjacent(int src, int dst){
 	if (src >= nVertices || dst >= nVertices){
 		return false;
 	}
-	return edgeMatrix[src*nVertices + dst].exists == true;
+
+	return edgeMatrix.at(src).at(dst).exists == true;
 }
 
 void Graph::add(int src, int dst){
@@ -50,8 +60,8 @@ void Graph::add(int src, int dst){
 	/* Edges are undirectional so if Vertex A has
 	an edge with Vertex B Vertex B has an edge
 	with Vertex A */
-	edgeMatrix[src*nVertices + dst].exists = true;
-	edgeMatrix[dst*nVertices + src].exists = true;
+	edgeMatrix.at(src).at(dst).exists = true;
+	edgeMatrix.at(dst).at(src).exists = true;
 }
 
 void Graph::remove(int src, int dst){
@@ -61,15 +71,15 @@ void Graph::remove(int src, int dst){
 	/* Edges are undirectional so if Vertex A has
 	an edge with Vertex B Vertex B has an edge
 	with Vertex A */
-	edgeMatrix[src*nVertices + dst].exists = false;
-	edgeMatrix[dst*nVertices + src].exists = false;
+	edgeMatrix.at(src).at(dst).exists = false;
+	edgeMatrix.at(dst).at(src).exists = false;
 }
 
 int Graph::getEdgeValue(int src, int dst){
 	if (src >= nVertices || dst >= nVertices){
 		return -1;
 	}
-	return edgeMatrix[src*nVertices + dst].cost;
+	return edgeMatrix.at(src).at(dst).cost;
 }
 
 void Graph::setEdgeValue(int src, int dst, int val){
@@ -79,8 +89,22 @@ void Graph::setEdgeValue(int src, int dst, int val){
 		return;
 	}
 	/* Set the cost for both edges since they are not directional */
-	edgeMatrix[src*nVertices + dst].cost = val;
-	edgeMatrix[dst*nVertices + src].cost = val;
+	edgeMatrix.at(src).at(dst).cost = val;
+	edgeMatrix.at(dst).at(src).cost = val;
+}
+
+int Graph::getVertexValue(int num){
+	if (num >= nVertices){
+		return -1;
+	}
+	return vertices->at(num);
+}
+
+void Graph::setVertexValue(int num, int val){
+	if (num >= nVertices){
+		return;
+	}
+	vertices->at(num) = val;
 }
 
 std::list<int> Graph::getNeighbors(int src){
