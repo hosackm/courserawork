@@ -2,7 +2,7 @@
 #include <iostream> // cout
 #include <stdlib.h> // srand, rand
 #include <time.h> // time
-#include <limits> // infinity
+#include <climits> // infinity
 #include <set> // set
 #include <utility> // pair
 #include <vector> // vector
