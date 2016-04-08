@@ -9,7 +9,9 @@ int main(int argc, char* argv[]){
     Graph *g = new Graph(infile);
     infile.close();
 
-    g->primsAlgo();
+    MST m;
+    m = g->primsAlgo();
+    m.display();
 
     delete g;
 

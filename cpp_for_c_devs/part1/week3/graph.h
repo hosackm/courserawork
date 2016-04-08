@@ -14,6 +14,16 @@ typedef struct _Edge {
 	bool exists; // does the connection exist
 }Edge;
 
+//Abstract definition of Minimum Spanning Tree class
+class MST{
+    std::vector<std::pair<
+                    std::pair<int, int>,
+                    int>> nodes;
+public:
+    void display();
+    void addEdge(int src, int dst, int cost);
+};
+
 class Graph {
 public:
     Graph(int numVertices);
@@ -42,7 +52,7 @@ public:
     // src to dst using Dijkstra's algorithm
     std::list<int> dijkstraShortestPath(int src, int dst);
     // Prims algorithm implementation
-    void primsAlgo();
+    MST primsAlgo();
     // Display through ostream
     friend std::ostream& operator<<(std::ostream& os, Graph& g);
     friend std::ostream& operator<<(std::ostream& os, Graph* const g);

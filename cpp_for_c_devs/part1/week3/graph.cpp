@@ -10,6 +10,7 @@
 #include <string> // string
 #include <algorithm> // count
 
+
 Graph::Graph(int numVertices){
     nVertices = numVertices;
     // Create vector of vectors
@@ -283,7 +284,27 @@ std::list<int> Graph::dijkstraShortestPath(int src, int dst){
 	return path;
 }
 
-void Graph::primsAlgo(){
+void MST::display(){
+	int sum = 0;
+	for(auto node : nodes){
+		std::pair<int, int> path = node.first;
+		int cost = node.second;
+
+		std::cout << path.first << " -> " << path.second
+		          << "  (Cost: " << cost << ")\n";
+
+		sum += cost;
+	}
+	std::cout << "Total cost: " << sum << std::endl;
+}
+
+void MST::addEdge(int src, int dst, int cost){
+	nodes.push_back(std::make_pair(std::make_pair(src, dst), cost));
+}
+
+
+MST Graph::primsAlgo(){
+	MST mst;
 	// Store visited vertices in a vector
     std::vector<bool> visited = std::vector<bool>(nVertices, false);
 
@@ -293,7 +314,7 @@ void Graph::primsAlgo(){
     	             visited.end(),
     	             true) < nVertices){
         int x, y;
-        int min = INT_MAX;
+        int min = INT_MAX; // seed min so that edge costs will be smaller
 
         for(int i = 0; i < nVertices; ++i){
             if(visited.at(i) == false) continue;
@@ -309,8 +330,11 @@ void Graph::primsAlgo(){
             }
         }
 
+        // Set visited and add to MST (+1 so stdout printout counts from 1)
         visited.at(y) = true;
-        std::cout << "\n" << x+1 << " --> " << y+1;
+        mst.addEdge(x+1, y+1, min);
     }
     std::cout << std::endl;
+
+    return mst;
 }
