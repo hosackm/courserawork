@@ -23,6 +23,50 @@ Graph::Graph(int numVertices){
 	vertices = new std::vector<int>(numVertices);
 }
 
+Graph::Graph(std::ifstream& datafile){
+	if(!datafile.is_open())
+		return;
+
+	// Read a line from the file
+    std::string line;
+    std::getline(datafile, line);
+
+    // Convert number of vertices to int and store in this graph
+    int numVertices = std::stoi(line);
+	nVertices = numVertices;
+
+	// Create vector of vectors
+	edgeMatrix = std::vector<std::vector<Edge> >(nVertices);
+	for(int i = 0; i < nVertices; ++i){
+		std::vector<Edge> col = std::vector<Edge>(nVertices);
+		// Vertices should have edges with themselves
+		col.at(i).exists = true;
+		edgeMatrix.at(i) = col;
+	}
+
+	// Create vertices
+	vertices = new std::vector<int>(numVertices);
+
+	// Add the edges from the file
+	while(std::getline(datafile, line)){
+    	std::string value;
+    	std::vector<int> values;
+    	std::stringstream valuesStream(line);
+
+    	while(valuesStream >> value){
+    		values.push_back(std::stoi(value));
+    	}
+
+    	int src = values.at(0);
+    	int dst = values.at(1);
+    	int cost = values.at(2);
+
+        this->add(src, dst);
+        this->setEdgeValue(src, dst, cost);
+    }
+}
+
+
 std::vector<std::vector<Edge> > Graph::getEdgeMatrix(){
 	return edgeMatrix;
 }
@@ -175,6 +219,7 @@ void Graph::addVertex(){
 		Edge e;
 		edgeMatrix.at(i).push_back(e);
 	}
+	vertices->push_back(0);
 	nVertices++;
 }
 

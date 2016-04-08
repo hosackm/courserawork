@@ -17,6 +17,7 @@ typedef struct _Edge {
 class Graph {
 public:
     Graph(int numVertices);
+    Graph(std::ifstream& datafile);
     ~Graph();
     // Function to randomly assign edges based on density and distance range
     void randomize(double density, double min, double max);
@@ -50,7 +51,5 @@ private:
     int nVertices;
     std::vector<int> *vertices;
 };
-
-Graph* graphFromFile(std::ifstream& datafile);
 
 #endif
