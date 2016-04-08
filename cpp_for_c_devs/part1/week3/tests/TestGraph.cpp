@@ -14,6 +14,76 @@ public:
     std::list<int> neighbors;
 };
 
+class MSTExample : public testing::Test {
+public:
+    void SetUp() {
+        g = new Graph(50);
+        g->add(0, 0);
+        g->setEdgeValue(0, 0, 99999);
+        g->add(0, 1);
+        g->setEdgeValue(0, 1, 2);
+        g->add(0, 2);
+        g->setEdgeValue(0, 2, 3);
+        g->add(1, 0);
+        g->setEdgeValue(1, 0, 2);
+        g->add(1, 2);
+        g->setEdgeValue(1, 2, 2);
+        g->add(1, 3);
+        g->setEdgeValue(1, 3, 4);
+        g->add(1, 5);
+        g->setEdgeValue(1, 5, 4);
+        g->add(1, 6);
+        g->setEdgeValue(1, 6, 6);
+        g->add(2, 0);
+        g->setEdgeValue(2, 0, 3);
+        g->add(2, 1);
+        g->setEdgeValue(2, 1, 2);
+        g->add(2, 2);
+        g->setEdgeValue(2, 2, 99999);
+        g->add(2, 5);
+        g->setEdgeValue(2, 5, 5);
+        g->add(3, 1);
+        g->setEdgeValue(3, 1, 4);
+        g->add(3, 3);
+        g->setEdgeValue(3, 3, 99999);
+        g->add(3, 4);
+        g->setEdgeValue(3, 4, 3);
+        g->add(3, 6);
+        g->setEdgeValue(3, 6, 5);
+        g->add(4, 3);
+        g->setEdgeValue(4, 3, 3);
+        g->add(4, 4);
+        g->setEdgeValue(4, 4, 99999);
+        g->add(4, 6);
+        g->setEdgeValue(4, 6, 5);
+        g->add(5, 1);
+        g->setEdgeValue(5, 1, 4);
+        g->add(5, 2);
+        g->setEdgeValue(5, 2, 5);
+        g->add(5, 5);
+        g->setEdgeValue(5, 5, 99999);
+        g->add(5, 6);
+        g->setEdgeValue(5, 6, 4);
+        g->add(6, 1);
+        g->setEdgeValue(6, 1, 6);
+        g->add(6, 3);
+        g->setEdgeValue(6, 3, 5);
+        g->add(6, 4);
+        g->setEdgeValue(6, 4, 5);
+        g->add(6, 5);
+        g->setEdgeValue(6, 5, 4);
+        g->add(6, 6);
+        g->setEdgeValue(6, 6, 99999);
+
+        mst = g->primsAlgo();
+    }
+    void TearDown() {
+        delete g;
+    }
+    Graph *g;
+    MST mst;
+};
+
 TEST_F(GraphFixture, TestPasses){
     ASSERT_TRUE(true);
 }
@@ -120,4 +190,7 @@ TEST_F(GraphFixture, NoNegativeCosts){
     g->add(1, 2);
     g->setEdgeValue(1, 2, -100);
     ASSERT_EQ(0, g->getEdgeValue(1, 2));
+}
+
+TEST_F(MSTExample, MSTHasCorrectSize){
 }
