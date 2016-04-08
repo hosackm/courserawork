@@ -41,6 +41,8 @@ public:
     // Return the cost of the shortest path from
     // src to dst using Dijkstra's algorithm
     std::list<int> dijkstraShortestPath(int src, int dst);
+    // Prims algorithm implementation
+    void primsAlgo();
     // Display through ostream
     friend std::ostream& operator<<(std::ostream& os, Graph& g);
     friend std::ostream& operator<<(std::ostream& os, Graph* const g);

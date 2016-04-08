@@ -8,6 +8,7 @@
 #include <utility> // pair
 #include <vector> // vector
 #include <string> // string
+#include <algorithm> // count
 
 Graph::Graph(int numVertices){
     nVertices = numVertices;
@@ -280,4 +281,36 @@ std::list<int> Graph::dijkstraShortestPath(int src, int dst){
 	for (; vertex != -1; vertex = previous[vertex])
 		path.push_front(vertex);
 	return path;
+}
+
+void Graph::primsAlgo(){
+	// Store visited vertices in a vector
+    std::vector<bool> visited = std::vector<bool>(nVertices, false);
+
+    //Start at 0th vertex and loop until we've visited all nodes
+    visited.at(0) = true;
+    while(std::count(visited.begin(),
+    	             visited.end(),
+    	             true) < nVertices){
+        int x, y;
+        int min = INT_MAX;
+
+        for(int i = 0; i < nVertices; ++i){
+            if(visited.at(i) == false) continue;
+            for(int j = 0; j < nVertices; ++j){
+            	if(visited.at(j) == false && edgeMatrix.at(i).at(j).exists){	
+	                int cost = this->getEdgeValue(i, j);
+	                if(min > cost){
+	                    min = cost;
+	                    x = i;
+	                    y = j;
+	                }
+            	}
+            }
+        }
+
+        visited.at(y) = true;
+        std::cout << "\n" << x+1 << " --> " << y+1;
+    }
+    std::cout << std::endl;
 }
