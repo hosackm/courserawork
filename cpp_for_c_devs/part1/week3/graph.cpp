@@ -287,25 +287,29 @@ std::list<int> Graph::dijkstraShortestPath(int src, int dst){
 void MST::display(){
 	int sum = 0;
 	for(auto node : nodes){
-		std::pair<int, int> path = node.first;
-		int cost = node.second;
+		// unpack the tuple
+		int src = std::get<0>(node);
+		int dst = std::get<1>(node);
+		int cost = std::get<2>(node);
 
-		std::cout << path.first << " -> " << path.second
+		// display each edge to the user
+		std::cout << src << " -> " << dst
 		          << "  (Cost: " << cost << ")\n";
 
 		sum += cost;
 	}
+	// display the total cost of the MST to the user
 	std::cout << "Total cost: " << sum << std::endl;
 }
 
 void MST::addEdge(int src, int dst, int cost){
-	nodes.push_back(std::make_pair(std::make_pair(src, dst), cost));
+	// pack the tuple and push back onto the MST
+	nodes.push_back(std::make_tuple(src, dst, cost));
 }
 
 
 MST Graph::primsAlgo(){
-	MST mst;
-	// Store visited vertices in a vector
+	MST mst;// Minimum spanning tree to store edges
     std::vector<bool> visited = std::vector<bool>(nVertices, false);
 
     //Start at 0th vertex and loop until we've visited all nodes

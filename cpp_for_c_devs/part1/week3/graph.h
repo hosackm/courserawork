@@ -1,10 +1,11 @@
 #ifndef __GRAPH_H__
 #define __GRAPH_H__
 
-#include <iostream>
-#include <fstream>
-#include <list>
-#include <vector>
+#include <iostream> // ostream
+#include <fstream> // ifstream
+#include <list> // list
+#include <vector> // vector
+#include <tuple> // tuple
 
 //The Edge struct represents the edge between two vertices.  At initialization
 //all vertices have non-existent edges connecting them to all other vertices
@@ -16,9 +17,7 @@ typedef struct _Edge {
 
 //Abstract definition of Minimum Spanning Tree class
 class MST{
-    std::vector<std::pair<
-                    std::pair<int, int>,
-                    int>> nodes;
+    std::vector<std::tuple<int, int, int>> nodes;
 public:
     void display();
     void addEdge(int src, int dst, int cost);
