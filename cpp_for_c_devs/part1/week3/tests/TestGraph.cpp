@@ -193,4 +193,5 @@ TEST_F(GraphFixture, NoNegativeCosts){
 }
 
 TEST_F(MSTExample, MSTHasCorrectSize){
+    ASSERT_EQ(7, mst.size());
 }
