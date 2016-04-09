@@ -1,6 +1,4 @@
-#include <iostream>
 #include <fstream>
-#include <list>
 #include "graph.h"
 
 int main(int argc, char* argv[]){

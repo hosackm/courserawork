@@ -1,6 +1,6 @@
 #include "graph.h"
 #include <iostream> // cout
-#include <sstream>
+#include <sstream> // stringstream
 #include <stdlib.h> // srand, rand
 #include <time.h> // time
 #include <climits> // infinity
