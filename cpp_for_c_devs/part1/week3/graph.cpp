@@ -317,7 +317,7 @@ MST Graph::primsAlgo(){
     while(std::count(visited.begin(),
     	             visited.end(),
     	             true) < nVertices){
-        int x, y;
+        int x = 0, y = 0;
         int min = INT_MAX; // seed min so that edge costs will be smaller
 
         for(int i = 0; i < nVertices; ++i){
@@ -341,4 +341,8 @@ MST Graph::primsAlgo(){
     std::cout << std::endl;
 
     return mst;
+}
+
+int MST::size(){
+	return nodes.size();
 }

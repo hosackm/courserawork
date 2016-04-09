@@ -17,7 +17,7 @@ public:
 class MSTExample : public testing::Test {
 public:
     void SetUp() {
-        g = new Graph(50);
+        g = new Graph(7);
         g->add(0, 0);
         g->setEdgeValue(0, 0, 99999);
         g->add(0, 1);
@@ -74,8 +74,6 @@ public:
         g->setEdgeValue(6, 5, 4);
         g->add(6, 6);
         g->setEdgeValue(6, 6, 99999);
-
-        mst = g->primsAlgo();
     }
     void TearDown() {
         delete g;
@@ -192,6 +190,12 @@ TEST_F(GraphFixture, NoNegativeCosts){
     ASSERT_EQ(0, g->getEdgeValue(1, 2));
 }
 
-TEST_F(MSTExample, MSTHasCorrectSize){
-    ASSERT_EQ(7, mst.size());
+TEST_F(MSTExample, MSTHasCorrectNoElementsBeforePrimRuns){
+    ASSERT_EQ(0, mst.size());
+}
+
+TEST_F(MSTExample, MSTCorrestSizeAfterPrim){
+	mst = g->primsAlgo();
+	// Num vertices is 7 so an MST will have 6 edges
+	ASSERT_EQ(6, mst.size());
 }

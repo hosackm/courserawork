@@ -21,6 +21,7 @@ class MST{
 public:
     void display();
     void addEdge(int src, int dst, int cost);
+	int size();
 };
 
 class Graph {
