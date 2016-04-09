@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "graph.h"
 #include <list>
+#include <tuple>
 
 class GraphFixture : public testing::Test {
 public:
@@ -198,4 +199,23 @@ TEST_F(MSTExample, MSTCorrestSizeAfterPrim){
 	mst = g->primsAlgo();
 	// Num vertices is 7 so an MST will have 6 edges
 	ASSERT_EQ(6, mst.size());
+}
+
+TEST_F(MSTExample, MSTExampleFromVideoMatchesReturnedMST){
+	/*mst = g->primsAlgo();
+	std::vector<std::tuple<int, int, int>> expected, nodes;
+
+	expected.push_back(std::make_tuple(1, 2, 2));
+	expected.push_back(std::make_tuple(2, 3, 2));
+	expected.push_back(std::make_tuple(2, 4, 4));
+	expected.push_back(std::make_tuple(4, 5, 3));
+	expected.push_back(std::make_tuple(2, 6, 4));
+	expected.push_back(std::make_tuple(6, 7, 4));
+
+	nodes = mst.getNodes();
+	for (int i = 0; i < 7; ++i){
+		for (int j = 0; j < 3; ++j){
+			ASSERT_EQ(std::get<j>(expected.at(i)), std::get<j>(nodes.at(i)));
+		}
+	}*/
 }

@@ -15,12 +15,15 @@ typedef struct _Edge {
 	bool exists; // does the connection exist
 }Edge;
 
+typedef int Vertex;
+
 //Abstract definition of Minimum Spanning Tree class
 class MST{
     std::vector<std::tuple<int, int, int>> nodes;
 public:
     void display();
     void addEdge(int src, int dst, int cost);
+	std::vector<std::tuple<int, int, int>> getNodes();
 	int size();
 };
 
@@ -46,11 +49,11 @@ public:
     int getVertexValue(int num);
     void setVertexValue(int num, int val);
     // Get the list of neighbors src has edges to
-    std::list<int> getNeighbors(int src);
+    std::list<Vertex> getNeighbors(int src);
     int numVertices(){ return nVertices; }
     // Return the cost of the shortest path from
     // src to dst using Dijkstra's algorithm
-    std::list<int> dijkstraShortestPath(int src, int dst);
+    std::list<Vertex> dijkstraShortestPath(int src, int dst);
     // Prims algorithm implementation
     MST primsAlgo();
     // Display through ostream
@@ -61,7 +64,7 @@ public:
 private:
     std::vector<std::vector<Edge> > edgeMatrix;
     int nVertices;
-    std::vector<int> *vertices;
+    std::vector<Vertex> *vertices;
 };
 
 #endif

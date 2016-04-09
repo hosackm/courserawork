@@ -22,7 +22,7 @@ Graph::Graph(int numVertices){
 		edgeMatrix.at(i) = col;
 	}
 
-	vertices = new std::vector<int>(numVertices);
+	vertices = new std::vector<Vertex>(numVertices);
 }
 
 Graph::Graph(std::ifstream& datafile){
@@ -34,8 +34,7 @@ Graph::Graph(std::ifstream& datafile){
     std::getline(datafile, line);
 
     // Convert number of vertices to int and store in this graph
-    int numVertices = std::stoi(line);
-	nVertices = numVertices;
+	nVertices = std::stoi(line);
 
 	// Create vector of vectors
 	edgeMatrix = std::vector<std::vector<Edge> >(nVertices);
@@ -47,7 +46,7 @@ Graph::Graph(std::ifstream& datafile){
 	}
 
 	// Create vertices
-	vertices = new std::vector<int>(numVertices);
+	vertices = new std::vector<Vertex>(nVertices);
 
 	// Add the edges from the file
 	while(std::getline(datafile, line)){
@@ -91,40 +90,6 @@ std::ostream& operator<<(std::ostream& os, Graph& g){
 std::ostream& operator<<(std::ostream& os, Graph* const g){
 	os << *g;
 	return os;
-}
-
-Graph* graphFromFile(std::ifstream& datafile){
-	if(!datafile.is_open())
-		return 0;
-
-    std::string line;
-    std::getline(datafile, line);
-
-    int numVertices = std::stoi(line);
-    std::cout << "Num Nodes: " << numVertices << std::endl;
-
-    Graph *g = new Graph(numVertices);
-    
-    while(std::getline(datafile, line)){
-    	std::string value;
-    	std::vector<int> values;
-    	std::stringstream valuesStream(line);
-
-    	while(valuesStream >> value){
-    		values.push_back(std::stoi(value));
-    	}
-
-    	int src = values.at(0);
-    	int dst = values.at(1);
-    	int cost = values.at(2);
-
-        g->add(src, dst);
-        g->setEdgeValue(src, dst, cost);
-    }
-
-    datafile.close();
-
-    return g;
 }
 
 Graph::~Graph(){
@@ -245,7 +210,7 @@ std::list<int> Graph::dijkstraShortestPath(int src, int dst){
 	}
 
 	std::vector<int> min_distance;
-	std::vector<int> previous;
+	std::vector<Vertex> previous;
 
 	// seed all values with INT_MAX (virtually infinity)
 	min_distance.resize(nVertices, INT_MAX);
@@ -253,7 +218,7 @@ std::list<int> Graph::dijkstraShortestPath(int src, int dst){
 
 	previous.resize(nVertices, -1);
 
-	std::set<std::pair<int, int>> vertex_queue; // weight / vertex
+	std::set<std::pair<int, Vertex>> vertex_queue; // weight / vertex
 	vertex_queue.insert(std::make_pair(min_distance[src], src));
 
 	while (!vertex_queue.empty()){
@@ -277,7 +242,7 @@ std::list<int> Graph::dijkstraShortestPath(int src, int dst){
 	}
 
 	// Recreate path from previous vector
-	std::list<int> path;
+	std::list<Vertex> path;
 	int vertex = dst;
 	for (; vertex != -1; vertex = previous[vertex])
 		path.push_front(vertex);
@@ -346,3 +311,8 @@ MST Graph::primsAlgo(){
 int MST::size(){
 	return nodes.size();
 }
+
+std::vector<std::tuple<int, int, int>> MST::getNodes(){
+	return nodes;
+}
+
