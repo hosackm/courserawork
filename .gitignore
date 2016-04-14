@@ -48,3 +48,6 @@
 *Debug*
 
 *.txt
+
+*pycache*
+venv
