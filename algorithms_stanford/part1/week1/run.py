@@ -8,8 +8,7 @@ def main(fn):
         for line in f:
             lines.append(int(line))
     merged, n = ninv(lines)
-    print(merged[:50])
-    # print(n, "inversions")
+    print(n, "inversions")
 
 
 if __name__ == "__main__":
