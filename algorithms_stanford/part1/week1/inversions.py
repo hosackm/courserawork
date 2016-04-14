@@ -1,30 +1,26 @@
 def ninv(arr):
-    def mergesort(arr):
-        def merge(l, r):
-            tmp = []
-            n = 0
+    if len(arr) < 2:
+        return arr, 0
 
-            while l and r:
-                if l[0] < r[0]:
-                    tmp.append(l.pop(0))
-                else:
-                    tmp.append(r.pop(0))
-                    n += len(l)
+    def merge(l, r):
+        tmp = []
+        n = 0
 
-            tmp.extend(l + r)
+        while l and r:
+            if l[0] < r[0]:
+                tmp.append(l.pop(0))
+            else:
+                n += len(l)
+                tmp.append(r.pop(0))
 
-            print("Adding", n)
-            return tmp, n
-            # end of merge()
-        if len(arr) < 2:
-            return arr, 0
+        tmp.extend(l + r)
 
-        mid = len(arr) // 2
+        return tmp, n
 
-        left, nl = mergesort(arr[:mid])
-        right, nr = mergesort(arr[mid:])
-        merged, nm = merge(left, right)
+    mid = len(arr) // 2
 
-        return merged, nm+nl+nr
-        # end of mergesort()
-    return mergesort(arr)
+    left, nl = ninv(arr[:mid])
+    right, nr = ninv(arr[mid:])
+    merged, nm = merge(left, right)
+
+    return merged, nm+nl+nr
