@@ -51,3 +51,15 @@
 
 *pycache*
 venv
+
+# Audio Signal Processing course
+asp/sms-tools-master/lectures
+README*
+asp/sms-tools-master/sounds
+asp/sms-tools-master/workspace
+LICENSE
+AUTHORS
+*.pyd
+*.pyx
+*.zip
+*.pdf
