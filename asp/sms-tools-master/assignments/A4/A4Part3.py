@@ -81,5 +81,32 @@ def computeEngEnv(inputFile, window, M, N, H):
             engEnv[:,1]: Energy envelope in band 3000 < f < 10000 Hz (in dB)
     """
     
-    ### your code here
+    w = get_window(window, M)
+    fs, x = UF.wavread(inputFile)
+    mX, pX = stft.stftAnal(x, w, N, H)
+
+    kmin, kmax = 1, int(np.ceil(3000.*N/fs)) # 0-3000Hz excluding 0 and 3000Hz
+    l = mX.shape[0]
+    e1 = np.zeros((1, l))
+    for i in range(l):
+        e1[0,i] = 10. * np.log10( np.sum((10.**(mX[i,kmin:kmax]/20.))**2) )
+
+    kmin = kmax
+    kmax = int(np.ceil(10000.*N/fs))
+    e2 = np.zeros((1, l))
+    for i in range(l):
+        e2[0,i] = 10. * np.log10( np.sum((10.**(mX[i,kmin:kmax]/20.))**2) )
+
+    e = np.zeros((e1.shape[1],2))
+    e[:,0] = e1
+    e[:,1] = e2
+    return e
+
+if __name__ == "__main__":
+    e = computeEngEnv("../../sounds/piano.wav", "blackman", 513, 1024, 128)
+    print(e)
+    e = computeEngEnv("../../sounds/piano.wav", "blackman", 2047, 4096, 128)
+    print(e)
+    e = computeEngEnv("../../sounds/sax-phrase-short.wav", "hamming", 513, 2048, 256)
+    print(e)
     
